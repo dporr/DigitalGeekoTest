@@ -39,3 +39,15 @@
             android:text="Footbal Dataset"
             style="@style/answer"/>
     </RadioGroup>
+
+    <Button
+        android:text="Get some magic!"
+        android:onClick="showResultActivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rgDataSet"
+        android:layout_alignStart="@+id/linearLayout"
+        android:layout_marginStart="101dp"
+        android:layout_marginTop="67dp"
+        android:id="@+id/button" />
+</RelativeLayout>
