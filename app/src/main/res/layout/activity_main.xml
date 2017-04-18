@@ -31,9 +31,11 @@
 
         <RadioButton
             android:id="@+id/rbWeather"
-            android:text="Wheater Dataset" />
+            android:text="Wheater Dataset"
+            style="@style/answer"/>
 
         <RadioButton
             android:id="@+id/rbFootball"
-            android:text="Footbal Dataset" />
+            android:text="Footbal Dataset"
+            style="@style/answer"/>
     </RadioGroup>
