@@ -6,6 +6,7 @@ import android.os.Bundle;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 import android.util.Log;
 
@@ -17,9 +18,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        minCol = 2;
-        maxCol = 3;
+        minCol = 3;
+        maxCol = 2;
         parseFile("s");
+//        findMinDifference();
     }
     /**
      * @author: dporras
@@ -50,12 +52,28 @@ public class MainActivity extends AppCompatActivity {
     private void cleanInput(String[] fields,int minCol,int maxCol){
         int minValue =  0;
         int maxValue = 0;
-        try{
-            minValue = Integer.parseInt(fields[minCol]);
-            maxValue = Integer.parseInt(fields[maxCol]);
-            map.put(fields[ROW_NAME],maxValue - minValue);
+       try{
+           minValue = Integer.parseInt(fields[minCol]);
+           maxValue = Integer.parseInt(fields[maxCol]);
+           map.put(fields[ROW_NAME],maxValue - minValue);
+           //Log.i("MIN",fields[minCol]);
+         // Log.i("Max",fields[maxCol]);
         }catch(NumberFormatException nfe){
-            return; //if not a valid row ignore it
+           //Log.i("ACTION","SK");
+           return;//if not a valid row ignore it
         }
+    }
+
+    private String findMinDifference(){
+        Map.Entry<String, Integer> maxEntry = null;
+        for (Map.Entry<String, Integer> entry : map.entrySet())
+        {
+            Log.i(">>>>>MESSAGE:",entry.getKey() +" "+entry.getValue());
+            if (maxEntry == null || entry.getValue().compareTo(maxEntry.getValue()) > 0)
+            {
+                maxEntry = entry;
+            }
+        }
+        return maxEntry.getKey();
     }
 }
