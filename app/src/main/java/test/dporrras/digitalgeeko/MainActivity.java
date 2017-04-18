@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        map = new HashMap<String, Integer>();
         minCol = 3;
         maxCol = 2;
         parseFile("s");
@@ -34,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
             Scanner scanner = new Scanner(file);
             scanner.useDelimiter("\n");
             while(scanner.hasNext()){
-                String[] fields = scanner.next().split(" ");
+                String[] fields = scanner.next().split("\\s+");
                 if(fields.length >= maxCol)
                     cleanInput(fields,minCol,maxCol);
             }
@@ -65,15 +66,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private String findMinDifference(){
-        Map.Entry<String, Integer> maxEntry = null;
-        for (Map.Entry<String, Integer> entry : map.entrySet())
-        {
+        // find minimum first
+        int min = Integer.MIN_VALUE;
+        for(HashMap.Entry<String, Integer> entry : map.entrySet()) {
+            min = Math.min(min, entry.getValue());
+        }
+        Map.Entry<String, Integer> minEntry = null   ;
+        for (Map.Entry<String, Integer> entry : map.entrySet()){
             Log.i(">>>>>MESSAGE:",entry.getKey() +" "+entry.getValue());
-            if (maxEntry == null || entry.getValue().compareTo(maxEntry.getValue()) > 0)
+            if (minEntry == null || entry.getValue().compareTo(min) < 0)
             {
-                maxEntry = entry;
+                minEntry = entry;
             }
         }
-        return maxEntry.getKey();
+        return minEntry.getKey();
     }
 }
