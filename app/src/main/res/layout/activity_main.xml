@@ -13,5 +13,27 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
-</RelativeLayout>
+        android:text="Chose a data set for processing:"
+        android:id="@+id/txTitle"
+        style="@style/question"/>
+
+
+    <LinearLayout style="@style/question_layout"
+        android:id="@+id/linearLayout"></LinearLayout>
+
+    <RadioGroup
+        android:id="@+id/rgDataSet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:layout_below="@+id/txTitle"
+        android:layout_alignParentEnd="true">
+
+        <RadioButton
+            android:id="@+id/rbWeather"
+            android:text="Wheater Dataset" />
+
+        <RadioButton
+            android:id="@+id/rbFootball"
+            android:text="Footbal Dataset" />
+    </RadioGroup>
