@@ -19,10 +19,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         map = new HashMap<String, Integer>();
-        minCol = 3;
-        maxCol = 2;
+        minCol = 9;
+        maxCol = 7;
         parseFile("s");
-//        findMinDifference();
+            findMinDifference();
     }
     /**
      * @author: dporras
@@ -31,12 +31,12 @@ public class MainActivity extends AppCompatActivity {
      * **/
     private void parseFile(String filename){
         //Api 19 needed to use try-with-resources
-        try(InputStream file = getApplicationContext().getResources().openRawResource(R.raw.weather)){
+        try(InputStream file = getApplicationContext().getResources().openRawResource(R.raw.football)){
             Scanner scanner = new Scanner(file);
             scanner.useDelimiter("\n");
             while(scanner.hasNext()){
                 String[] fields = scanner.next().split("\\s+");
-                if(fields.length >= maxCol)
+                if(fields.length > minCol)
                     cleanInput(fields,minCol,maxCol);
             }
         } catch (IOException e) {
@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
        try{
            minValue = Integer.parseInt(fields[minCol]);
            maxValue = Integer.parseInt(fields[maxCol]);
-           map.put(fields[ROW_NAME],maxValue - minValue);
+           map.put(fields[ROW_NAME],Math.abs(maxValue - minValue));
            //Log.i("MIN",fields[minCol]);
          // Log.i("Max",fields[maxCol]);
         }catch(NumberFormatException nfe){
@@ -65,20 +65,25 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * @author: dporras
+     * @return the key with the min value from a hasmap
+=    ***/
     private String findMinDifference(){
         // find minimum first
-        int min = Integer.MIN_VALUE;
+        int min = Integer.MAX_VALUE;
         for(HashMap.Entry<String, Integer> entry : map.entrySet()) {
             min = Math.min(min, entry.getValue());
         }
-        Map.Entry<String, Integer> minEntry = null   ;
+        Map.Entry<String, Integer> minEntry = null ;
         for (Map.Entry<String, Integer> entry : map.entrySet()){
-            Log.i(">>>>>MESSAGE:",entry.getKey() +" "+entry.getValue());
-            if (minEntry == null || entry.getValue().compareTo(min) < 0)
+            //Log.i(">>>>>MESSAGE:",entry.getKey() +" "+entry.getValue());
+            if (minEntry == null || entry.getValue().intValue() <= min)
             {
                 minEntry = entry;
             }
         }
+        Log.i(">>>>MENOR:",minEntry.getKey());
         return minEntry.getKey();
     }
 }
