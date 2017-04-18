@@ -3,6 +3,7 @@ package test.dporrras.digitalgeeko;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -11,16 +12,26 @@ import java.util.Map;
 import java.util.Scanner;
 
 import javax.microedition.khronos.opengles.GL;
+import android.content.Intent;
+
 
 public class ResultsActivity extends Activity implements GlobalValues {
     private int minCol,maxCol,rowName;
     private  HashMap<String,Integer> map;
-
+    private TextView txAnswer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_results);
         map = new HashMap<String, Integer>();
+        Bundle extras = getIntent().getExtras();
+        txAnswer = (TextView) findViewById(R.id.txAnswer);
+        rowName =  extras.getInt(ROW_NAME);
+        minCol = extras.getInt(MIN_COL);
+        maxCol = extras.getInt(MAX_COL);
+        String s = extras.getString(DATASET);
+        parseFile(s);
+        txAnswer.setText(findMinDifference());
     }
 
     /**
@@ -30,7 +41,9 @@ public class ResultsActivity extends Activity implements GlobalValues {
      * **/
     private void parseFile(String filename){
         //Api 19 needed to use try-with-resources
-        try(InputStream file = getApplicationContext().getResources().openRawResource(R.raw.weather)){
+        int id = R.raw.weather;
+        if(filename.equals(FOOTBALL_DS)) id = R.raw.football;
+                try(InputStream file = getApplicationContext().getResources().openRawResource(id)){
             Scanner scanner = new Scanner(file);
             scanner.useDelimiter("\n");
             while(scanner.hasNext()){
@@ -76,13 +89,12 @@ public class ResultsActivity extends Activity implements GlobalValues {
         }
         Map.Entry<String, Integer> minEntry = null ;
         for (Map.Entry<String, Integer> entry : map.entrySet()){
-            //Log.i(">>>>>MESSAGE:",entry.getKey() +" "+entry.getValue());
+            Log.i(">>>>>MESSAGE:",entry.getKey() +" "+entry.getValue());
             if (minEntry == null || entry.getValue().intValue() <= min)
             {
                 minEntry = entry;
             }
         }
-        Log.i(">>>>MENOR:",minEntry.getKey());
         return minEntry.getKey();
     }
 }
