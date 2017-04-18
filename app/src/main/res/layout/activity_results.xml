@@ -10,4 +10,19 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="test.dporrras.digitalgeeko.ResultsActivity">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="El dato/row con menor diferenccia es:"
+        android:id="@+id/txTitle"
+        style="@style/question"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txAnswer"
+        style="@style/question"
+        android:layout_below="@+id/txTitle"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="79dp" />
 </RelativeLayout>
