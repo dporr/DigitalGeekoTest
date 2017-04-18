@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
      * **/
     private void parseFile(String filename){
         //Uso de api 19 por soportortar try-with-resources
-        try(InputStream file = getApplicationContext().getResources().openRawResource(R.raw.football)){
+        try(InputStream file = getApplicationContext().getResources().openRawResource(R.raw.weather)){
             Scanner scanner = new Scanner(file);
             scanner.useDelimiter("\n");
             while(scanner.hasNext()) Log.i("message: ",scanner.next());
